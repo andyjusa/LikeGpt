@@ -10,12 +10,10 @@ from langchain_community.embeddings import HuggingFaceBgeEmbeddings
 import json
 from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferMemory
-from langchain.memory import StreamlitChatMessageHistory
 import os
 from langchain_core.messages.human import HumanMessage
 from langchain_core.messages.ai import AIMessage
-from langchain_community.chat_models import ChatOllama,ChatHuggingFace
-from langchain_community.llms import HuggingFacePipeline
+from langchain_community.chat_models import ChatOllama
 import ollama
 
 os.environ['HF_HOME'] = "/Users/jeongjaemin/Desktop/LikeGpt/models"
@@ -26,7 +24,7 @@ TEMP = 0.1
 
 embed_model_en = OllamaEmbeddings(model="nomic-embed-text",show_progress=True) #For English
 embed_model_ko = HuggingFaceBgeEmbeddings( #For Korean
-    model_name="/Users/jeongjaemin/Desktop/ko-sroberta-nli",
+    model_name="ko-sroberta-nli",
     model_kwargs={'device': 'cpu'},
     encode_kwargs={'normalize_embeddings': True}
 ) #For korean
@@ -98,7 +96,7 @@ def main():
     with st.sidebar:
         tab1,tab2 = st.tabs(["dataSet","chatList"])
         with tab1:
-            uploadedFiles = st.file_uploader("Upload your files",type=['pdf,docx,pptx'],accept_multiple_files=True)
+            uploadedFiles = st.file_uploader("Upload your files",accept_multiple_files=True)
             num = st.number_input("Number of URLs", 0)
             left_column, right_column = st.columns(2)
             scan = left_column.toggle("Scan")
